@@ -1,0 +1,57 @@
+body {
+	font-family: 'Droid Serif', serif;;
+	font-size: 17px;
+	color: #3E4349;
+	line-height: 23px;
+}
+
+#wrapper {
+	width: 960px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#logo {
+	text-align: center;
+}
+#logo h1, #logo p {
+	margin: 0;
+}
+
+#messages {
+	background: #CEE5F5;
+	padding: 5px;
+	border: 1px solid #AACBE2;
+}
+#messages p {
+	padding: 0px;
+	margin: 0px;
+}
+
+.nav {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+.adminnav {
+	text-align: right;
+}
+
+#footer {
+	margin-top: 40px;
+	font-size: 12px;
+	text-align: right;
+}
+
+pre {
+	font-family: 'Droid Sans Mono', sans-serif;
+	font-size: 15px;
+	padding: 8px;
+	background-color: #EEE;
+	color: black;
+}
+
+a {
+	color: #004B6B;
+}

@@ -1,0 +1,17 @@
+.post .title {
+	margin-bottom: 0px;
+}
+
+.post .title a {
+	text-decoration: none;
+	color: #3E4349;
+}
+
+.post .title a:hover {
+	text-decoration: underline;
+}
+
+.post .meta {
+	margin-top: 5px;
+	font-size: small;
+}

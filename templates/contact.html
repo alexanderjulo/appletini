@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Contact{% endblock %}
+{% block css %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='form.css') }}">{% endblock %}
+{% block content %}
+<div class="form">
+	<form method="POST" action="/contact">
+		<label for "email">your name:</label><br />
+		<input type="text" id="name" name="name" size="40"><br />
+		<label for "email">your mail:</label><br />
+		<input type="text" id="email" name="email" size="40"><br />
+		<label for "password">your message:</label><br />
+		<textarea id="text" name="text"></textarea><br />
+		<input type="submit" value="Send">
+	</form>
+</div>
+{% endblock %}

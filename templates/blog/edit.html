@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}
+{% if title %}
+	Edit Post: {{ title }}
+{% else %}
+	Add Post
+{% endif %}
+{% endblock %}
+{% block css %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='form.css') }}">{% endblock %}
+
+{% block content %}
+<div class="form">
+	<form method="POST" action="/admin/post/post">
+		<input type="hidden" id="id" name="id" value="{{ id }}">
+		<label for "title">Title:</label><br />
+		<input type="text" id="title" name="title" size="60" value="{{ title }}"><br />
+		<label for "body">Body:</label><br />
+		<textarea type="password" id="body" name="body">{{ body }}</textarea><br />
+		<input type="submit" value="Post">
+	</form>
+</div>
+{% endblock %}

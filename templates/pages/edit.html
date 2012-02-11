@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}
+{% if title %}
+	Edit Page: {{ title }}
+{% else %}
+	Add Page
+{% endif %}
+{% endblock %}
+{% block css %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='form.css') }}">{% endblock %}
+{% block content %}
+<h2>Pageedit: {{ title }}</h2>
+<div class="form">
+	<form action="/admin/page/post" method="post">
+		<input type="hidden" id="id" name="id" value="{{ id }}">
+		<label for="path">Path:</label><br />
+		<input id="path" name="path" size="68" type="text" value="{{ path }}"><br />
+		<label for="title">Title:</label><br />
+		<input id="title" name="title" size="68" type="text" value="{{ title }}"><br />
+		<label for="body">Body:</label><br />
+		<textarea id="body" name="body">{{ body }}</textarea><br />
+		<input type="submit" value="Save">
+	</form>
+</div>
+{% endblock %}

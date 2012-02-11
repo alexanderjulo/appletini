@@ -1,0 +1,18 @@
+.form {
+	margin-top: 50px;
+	text-align: center;
+}
+
+.form input, .form textarea {
+	border-style: solid;
+	border-color: #3E4349;
+	border-width: 1px;
+}
+
+.form label, .form input {
+	margin-bottom: 10px;
+}
+.form textarea {
+	width: 500px;
+	height: 400px;
+}
