@@ -1,8 +1,7 @@
-from flask import Flask, redirect, url_for, render_template, request, flash
-from flaskext.sqlalchemy import SQLAlchemy
+from flask import redirect, url_for, render_template, request, flash
 from sqlalchemy import desc
-from flaskext.login import LoginManager, login_user, logout_user, login_required, current_user
-from flaskext.mail import Mail, Message
+from flaskext.login import login_user, logout_user, login_required, current_user
+from flaskext.mail import Message
 
 from werkzeug.contrib.atom import AtomFeed
 
@@ -10,27 +9,7 @@ from hashlib import md5
 from textile import textile
 from datetime import datetime
 
-# create the flask object
-www = Flask(__name__)
-# disable debug mode
-www.debug = True
-
-#  this is some magic to hide secret config options
-try:
-   from secret import *
-except ImportError:
-   pass
-# enable database
-db = SQLAlchemy(www)
-
-# enable mail
-mail = Mail(www)
-
-# create login manager and configure it
-login = LoginManager()
-login.setup_app(www, add_context_processor=True)
-login.login_view = 'login'
-
+from www import www, db, login, mail
 
 # login & user stuff
 class User(db.Model):
