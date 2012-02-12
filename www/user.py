@@ -48,7 +48,7 @@ def user_loader(id):
 		return User.query.get(id)
 
 
-@www.route('/login', methods=["GET", "POST"])
+@www.route('/login/', methods=["GET", "POST"])
 def login():
 	if request.method == 'POST':
 		user = User.query.filter_by(mail=request.form['email']).first()
@@ -65,7 +65,7 @@ def login():
 	return render_template('login.html')
 
 
-@www.route('/logout')
+@www.route('/logout/')
 @login_required
 def logout():
 	current_user.authenticated = False
