@@ -1,5 +1,6 @@
 from flask import Flask
 www = Flask(__name__)
+www.config.from_pyfile('../config.cfg')
 
 from flaskext.login import LoginManager
 login = LoginManager()
