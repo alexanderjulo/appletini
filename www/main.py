@@ -5,91 +5,11 @@ from flaskext.mail import Message
 
 from werkzeug.contrib.atom import AtomFeed
 
-from hashlib import md5
 from textile import textile
 from datetime import datetime
 
 from www import www, db, login, mail
-
-# login & user stuff
-class User(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	email = db.Column(db.String(60), unique=True)
-	password = db.Column(db.String(32))
-	firstname = db.Column(db.String(20))
-	lastname = db.Column(db.String(30))
-	active = db.Column(db.Boolean)
-	authenticated = db.Column(db.Boolean)
-	
-	def __init__(self, email, password, firstname, lastname):
-		self.email = email
-		self.password = md5(password).hexdigest()
-		self.firstname = firstname
-		self.lastname = lastname
-		self.active = True
-		self.authenticated = False
-		
-	def __repr__(self):
-		return '<User: %s>' % self.username
-		
-	def authenticate(self, password):
-		if self.password == md5(password).hexdigest():
-			return True
-		else:
-			return False
-		
-	# the loginmanager specific stuff
-	def is_authenticated(self):
-		return self.authenticated
-		
-	def is_active(self):
-		return self.active
-		
-	def is_anonymous(self):
-		return False
-	
-	def get_id(self):
-		return self.id	
-
-def authenticate_user(email, password):
-	user = User.query.filter_by(email=email)
-	if user is None:
-		return None
-	elif user.password != password:
-		return None
-	else:
-		return user 
-
-@login.user_loader
-def user_loader(id):
-		return User.query.get(id)
-
-
-@www.route('/login', methods=["GET", "POST"])
-def login():
-	if request.method == 'POST':
-		user = User.query.filter_by(email=request.form['email']).first()
-		if user is None:
-			flash('Login failed.')
-		elif user.authenticate(request.form['password']):
-			user.authenticated = True
-			db.session.commit()
-			login_user(user)
-			flash('Login succeeded.')
-			return redirect(request.args.get("next") or url_for('home'))
-		else:
-			flash('Login failed.')
-	return render_template('login.html')
-
-
-@www.route('/logout')
-@login_required
-def logout():
-	current_user.authenticated = False
-	db.session.commit()
-	logout_user()
-	flash('Logout succeeded.')
-	return redirect(url_for('home'))
+from user import User
 
 @www.route('/admin/user')
 @login_required

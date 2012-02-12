@@ -13,4 +13,5 @@ db = SQLAlchemy(www)
 from flaskext.mail import Mail
 mail = Mail(www)
 
+from www import user
 from www import main
