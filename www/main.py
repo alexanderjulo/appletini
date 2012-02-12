@@ -156,14 +156,7 @@ def postdel(id):
 def home():
 	return redirect(url_for('postindex'))
 
-# create non existent tables
-db.create_all()
-
 # 404 page
 @www.errorhandler(404)
 def page_not_found(error):
 	return render_template('pagenotfound.html'), 404
-	
-# run the developement server
-if __name__ == '__main__':
-    www.run(host='0.0.0.0')
