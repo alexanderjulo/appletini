@@ -1,5 +1,5 @@
 To make this setup work you need to create a config.cfg in the project's root with the following settings:
 SECRET_KEY=<your secret key>
-SLQLALCHEMY_DATABASE_URI=<uri to your database>
+SQLALCHEMY_DATABASE_URI=<uri to your database>
 
 Of course you can include any other config options in it, like debugging and so on..
