@@ -89,7 +89,7 @@ def postindex():
 	posts = Post.query.order_by(desc('created')).all()
 	for post in posts:
 		author = User.query.get(post.author)
-		post.author_name = author.firstname + ' ' + author.lastname
+		post.author_name = author.name
 		post.body = textile(post.body)
 	return render_template('blog/index.html', posts=posts)
 	
@@ -97,7 +97,7 @@ def postindex():
 def postshow(id):
 	post = Post.query.get_or_404(id)
 	author = User.query.get(post.author)
-	post.author_name = author.firstname + ' ' + author.lastname
+	post.author_name = author.name
 	post.body = textile(post.body)
 	return render_template('blog/show.html', post=post)
 	
@@ -107,7 +107,7 @@ def postatom():
 	feed = AtomFeed('julo.ch', feed_url=request.url, url=request.host_url, subtitle='It\'s mine.')
 	for post in Post.query.order_by(desc('created')).limit(10).all():
 		author = User.query.get(post.author)
-		post.author_name = author.firstname + ' ' + author.lastname
+		post.author_name = author.name
 		feed.add(post.title, textile(post.body), content_type='html', author=post.author_name, url=url_for('postshow', id=post.id), id=post.id, updated=post.created, published=post.created)
 	return feed.get_response()
 	
