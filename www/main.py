@@ -31,7 +31,7 @@ def useredit(id=None):
 def userdel(id):
 	pass
 	
-@www.route('/admin/user/post/', methods=['POST'])
+@www.route('/admin/user/post', methods=['POST'])
 @login_required
 def userpost():
 	pass
@@ -45,7 +45,7 @@ def projectindex():
 
 
 # contact app
-@www.route('/contact/', methods=['GET', 'POST'])
+@www.route('/contact', methods=['GET', 'POST'])
 def contact():
 	if request.method == 'POST':
 		if request.form['name'] == '':
@@ -125,7 +125,7 @@ def postedit(id=None):
 		post = Post.query.filter_by(id=id).first_or_404()
 		return render_template('blog/edit.html', body=post.body, title=post.title, id=post.id)
 
-@www.route('/admin/post/post/', methods=['POST'])
+@www.route('/admin/post/post', methods=['POST'])
 @login_required
 def postpost():
 	if request.form['id'] == '':

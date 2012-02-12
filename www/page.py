@@ -39,7 +39,7 @@ def pagedel(id):
 	flash('Page deleted.')
 	return redirect(url_for('pageindex'))
 
-@www.route('/admin/page/post/', methods=['POST'])
+@www.route('/admin/page/post', methods=['POST'])
 @login_required
 def pagepost():
 	if request.form['id'] == '':
