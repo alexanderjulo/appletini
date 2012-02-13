@@ -16,7 +16,7 @@ def contact():
 		else:
 			msg = Message('Contact form input',
 				sender = (request.form['name'], request.form['email']),
-				recipients = ['alexander.jung-loddenkemper@julo.ch'],
+				recipients = [www.config['WWW_CONTACT_MAIL']],
 				body = request.form['text'],
 			)
 			mail.send(msg)
