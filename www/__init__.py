@@ -16,3 +16,4 @@ mail = Mail(www)
 from www import user
 from www import main
 from www import page
+from www import blog
