@@ -47,9 +47,7 @@ def postshow(id):
 def postatom():
 	feed = AtomFeed('julo.ch', feed_url=request.url, url=request.host_url, subtitle='It\'s mine.')
 	for post in Post.query.order_by(desc('created')).limit(10).all():
-		author = User.query.get(post.author)
-		post.author_name = author.name
-		feed.add(post.title, post.body_textile, content_type='html', author=post.author_name, url=url_for('postshow', id=post.id), id=post.id, updated=post.created, published=post.created)
+		feed.add(post.title, post.body_textile, content_type='html', author=post.author.name, url=url_for('postshow', id=post.id), id=post.id, updated=post.created, published=post.created)
 	return feed.get_response()
 
 @www.route('/admin/post/add/')
