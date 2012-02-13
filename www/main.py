@@ -1,11 +1,8 @@
 from flask import redirect, url_for, render_template, request, flash
-from flaskext.login import login_user, logout_user, login_required, current_user
+from flaskext.login import login_required
 from flaskext.mail import Message
 
-from datetime import datetime
-
-from www import www, db, login, mail
-from user import User
+from www import www, mail
 
 @www.route('/admin/user/')
 @login_required

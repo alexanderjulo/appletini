@@ -1,10 +1,11 @@
 from flask import render_template, request, redirect, url_for, flash
-from flaskext.login import login_required
+from flaskext.login import login_required, current_user
 
 from werkzeug.contrib.atom import AtomFeed
 
 from sqlalchemy import desc
 from textile import textile
+from datetime import datetime
 
 from www import www, db
 
