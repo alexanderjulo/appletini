@@ -70,14 +70,16 @@ def contact():
 class Post(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String(60))
-	body = db.Column(db.Text)
+	body_plain = db.Column(db.Text)
+	body_textile = db.Column(db.Text)
 	created = db.Column(db.DateTime)
 	
 	author = db.Column(db.Integer, db.ForeignKey('user.id'))
 	
 	def __init__(self, title, body, author):
 		self.title = title
-		self.body = body
+		self.body_plain = body
+		self.body_textile = textile(body)
 		self.created = datetime.utcnow()
 		self.author = author
 
@@ -94,7 +96,6 @@ def postpage(page):
 	for post in posts.items:
 		author = User.query.get(post.author)
 		post.author_name = author.name
-		post.body = textile(post.body)
 	return render_template('blog/index.html', posts=posts)
 	
 @www.route('/blog/post/<int:id>/')
@@ -112,7 +113,7 @@ def postatom():
 	for post in Post.query.order_by(desc('created')).limit(10).all():
 		author = User.query.get(post.author)
 		post.author_name = author.name
-		feed.add(post.title, textile(post.body), content_type='html', author=post.author_name, url=url_for('postshow', id=post.id), id=post.id, updated=post.created, published=post.created)
+		feed.add(post.title, post.body_textile, content_type='html', author=post.author_name, url=url_for('postshow', id=post.id), id=post.id, updated=post.created, published=post.created)
 	return feed.get_response()
 	
 @www.route('/admin/post/add/')
@@ -127,7 +128,7 @@ def postedit(id=None):
 		return render_template('blog/edit.html')
 	else:
 		post = Post.query.filter_by(id=id).first_or_404()
-		return render_template('blog/edit.html', body=post.body, title=post.title, id=post.id)
+		return render_template('blog/edit.html', body=post.body_plain, title=post.title, id=post.id)
 
 @www.route('/admin/post/post', methods=['POST'])
 @login_required
@@ -138,7 +139,8 @@ def postpost():
 	else:
 		post = Post.query.filter_by(id=request.form['id']).first_or_404()
 		post.title = request.form['title']
-		post.body = request.form['body']
+		post.body_plain = request.form['body']
+		post.body_textile = textile(request.form['body'])
 	db.session.commit()
 	flash('Post saved.')
 	return redirect(url_for('postindex'))
