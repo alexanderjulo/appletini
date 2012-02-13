@@ -14,7 +14,7 @@ class User(db.Model):
 	authenticated = db.Column(db.Boolean)
 
 	def __init__(self, mail, password, name):
-		self.name = firstname
+		self.name = name
 		self.mail = mail
 		self.password = md5(password).hexdigest()
 		self.active = True
