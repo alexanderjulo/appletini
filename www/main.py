@@ -1,6 +1,5 @@
 from flask import redirect, url_for, render_template, request, flash
 from flaskext.login import login_required
-from flaskext.mail import Message
 
 from www import www, mail
 
@@ -28,12 +27,6 @@ def userdel(id):
 @login_required
 def userpost():
 	pass
-
-
-# projects page
-@www.route('/projects/')
-def projectindex():
-	return render_template('comingsoon.html', what='Projects')
 
 # stuff independent of the sections
 

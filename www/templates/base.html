@@ -17,7 +17,7 @@
 				<h1>{{ title }}</h1>
 				<p>{{ slogan }}</p>
 			</div>
-			<p class="nav"><a href="/blog">blog</a> // <a href="/projects">projects</a> // <a href="/about">about</a> // <a href="/contact">contact</a></p>
+			<p class="nav"><a href="/blog">blog</a> // <a href="/about">about</a> // <a href="/contact">contact</a></p>
 			{% if current_user.is_authenticated() %}<p class="adminnav">admin: <a href="/admin/page">pages</a> // <a href="/admin/user">user</a>{% endif %}</p>
 			<div id="content">
 				{% with messages = get_flashed_messages() %}
