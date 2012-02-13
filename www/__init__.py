@@ -16,7 +16,8 @@ mail = Mail(www)
 from www import tweaks
 from www import main
 from www import user
-from www import page
+from www.page import page
+www.register_blueprint(page)
 from www.blog import blog
 www.register_blueprint(blog, url_prefix='/blog')
 from www.contact import contact

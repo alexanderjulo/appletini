@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}
-{% if title %}
-	Edit Page: {{ title }}
+{% if page %}
+	Edit Page: {{ page.title }}
 {% else %}
 	Add Page
 {% endif %}
@@ -10,14 +10,14 @@
 {% block content %}
 <h2>Pageedit: {{ title }}</h2>
 <div class="form">
-	<form action="/admin/page/post" method="post">
-		<input type="hidden" id="id" name="id" value="{{ id }}">
+	<form action="{{ url_for('page.pagepost') }}" method="post">
+		<input type="hidden" id="id" name="id" value="{% if page %}{{ page.id }}{% endif %}">
 		<label for="path">Path:</label><br />
-		<input id="path" name="path" size="68" type="text" value="{{ path }}"><br />
+		<input id="path" name="path" size="68" type="text" value="{% if page %}{{ page.path }}{% endif %}"><br />
 		<label for="title">Title:</label><br />
-		<input id="title" name="title" size="68" type="text" value="{{ title }}"><br />
+		<input id="title" name="title" size="68" type="text" value="{% if page %}{{ page.title }}{% endif %}"><br />
 		<label for="body">Body:</label><br />
-		<textarea id="body" name="body">{{ body }}</textarea><br />
+		<textarea id="body" name="body">{% if page %}{{ page.body_plain }}{% endif %}</textarea><br />
 		<input type="submit" value="Save">
 	</form>
 </div>
