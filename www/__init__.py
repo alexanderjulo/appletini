@@ -17,3 +17,4 @@ from www import main
 from www import user
 from www import page
 from www import blog
+from www import contact
