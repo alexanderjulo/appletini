@@ -10,7 +10,7 @@
 
 {% block content %}
 <div class="form">
-	<form method="POST" action="/admin/post/post">
+	<form method="POST" action="{{ url_for('blog.postpost') }}">
 		<input type="hidden" id="id" name="id" value="{{ id }}">
 		<label for "title">Title:</label><br />
 		<input type="text" id="title" name="title" size="60" value="{{ title }}"><br />

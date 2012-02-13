@@ -17,5 +17,6 @@ from www import tweaks
 from www import main
 from www import user
 from www import page
-from www import blog
+from www.blog import blog
+www.register_blueprint(blog, url_prefix='/blog')
 from www import contact

@@ -8,7 +8,7 @@ from www import www
 # home page
 @www.route('/')
 def home():
-	return redirect(url_for('postindex'))
+	return redirect(url_for('blog.postindex'))
 
 # 404 page
 @www.errorhandler(404)
