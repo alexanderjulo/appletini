@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 	<head>
-		<title>{% block title %}Seite{% endblock %} - julo.ch</title>
+		<title>{% block title %}Site{% endblock %} - {{ title }}</title>
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='base.css') }}">
 		<link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono|Droid+Serif' rel='stylesheet' type='text/css'>
 		<link rel="alternate" type="application/atom+xml" title="Blog - julo.ch" href="http://www.julo.ch/blog/atom" />
@@ -26,8 +26,8 @@
 	<body>
 		<div id="wrapper">
 			<div id="logo">
-				<h1>julo.ch</h1>
-				<p>It's mine.</p>
+				<h1>{{ title }}</h1>
+				<p>{{ slogan }}</p>
 			</div>
 			<p class="nav"><a href="/blog">blog</a> // <a href="/projects">projects</a> // <a href="/about">about</a> // <a href="/contact">contact</a></p>
 			{% if current_user.is_authenticated() %}<p class="adminnav">admin: <a href="/admin/page">pages</a> // <a href="/admin/user">user</a> // <a href="https://www.google.com/analytics/web/#report/visitors-overview/a28190962w53824221p54711255/">analytics</a>{% endif %}</p>

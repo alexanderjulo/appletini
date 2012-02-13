@@ -13,6 +13,7 @@ db = SQLAlchemy(www)
 from flaskext.mail import Mail
 mail = Mail(www)
 
+from www import tweaks
 from www import main
 from www import user
 from www import page
