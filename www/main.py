@@ -86,8 +86,12 @@ class Post(db.Model):
 		
 @www.route('/blog/')
 def postindex():
-	posts = Post.query.order_by(desc('created')).all()
-	for post in posts:
+	return postpage(1)
+	
+@www.route('/blog/<int:page>/')
+def postpage(page):
+	posts = Post.query.order_by(desc('created')).paginate(page, per_page=6)
+	for post in posts.items:
 		author = User.query.get(post.author)
 		post.author_name = author.name
 		post.body = textile(post.body)

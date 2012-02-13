@@ -4,8 +4,8 @@
 
 {% block content %}
 {% if current_user.is_authenticated() %}<p class="adminnav">blog: <a href="/admin/post/add">add post</a></p>{% endif %}
-{% if posts %}
-	{% for post in posts %}
+{% if posts.items %}
+	{% for post in posts.items %}
 		<div class="post">
 			<h2 class="title"><a href="/blog/post/{{ post.id }}">{{ post.title }}</a></h2>
 			<p class="meta">Posted by {{ post.author_name }} on {{ post.created }}</p>
@@ -13,6 +13,15 @@
 			{% if current_user.is_authenticated() %}<p class="meta nav" style="text-align: right;">post: <a href="/admin/post/edit/{{ post.id }}">edit</a> // <a href="/admin/post/delete/{{ post.id}}">delete</a></span>{% endif %}
 		</div>
 	{% endfor %}
+	<div id="pagination">
+		{% if posts.has_prev %}
+		<span id="back"><a href="{{ url_for('postpage', page=posts.prev_num) }}">More recent</a></span>
+		{% endif %}
+		<span id="active">{{ posts.page }} of {{ posts.pages }}</span>
+		{% if posts.has_next %}
+		<span id="next"><a href="{{ url_for('postpage', page=posts.next_num) }}">Less recent</a></span>
+		{% endif %}
+	</div>
 {% else %}
 	<p>There are no posts yet.</p>
 {% endif %}
