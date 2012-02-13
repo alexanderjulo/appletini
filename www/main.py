@@ -74,14 +74,14 @@ class Post(db.Model):
 	body_textile = db.Column(db.Text)
 	created = db.Column(db.DateTime)
 	
-	author = db.Column(db.Integer, db.ForeignKey('user.id'))
+	author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	
 	def __init__(self, title, body, author):
 		self.title = title
 		self.body_plain = body
 		self.body_textile = textile(body)
 		self.created = datetime.utcnow()
-		self.author = author
+		self.author_id = author
 
 	def __repr__(self):
 		return '<Post: %r>' % self.title
@@ -92,18 +92,12 @@ def postindex():
 	
 @www.route('/blog/<int:page>/')
 def postpage(page):
-	posts = Post.query.order_by(desc('created')).paginate(page, per_page=6)
-	for post in posts.items:
-		author = User.query.get(post.author)
-		post.author_name = author.name
+	posts = Post.query.join('author').order_by(desc('created')).paginate(page, per_page=6)
 	return render_template('blog/index.html', posts=posts)
 	
 @www.route('/blog/post/<int:id>/')
 def postshow(id):
-	post = Post.query.get_or_404(id)
-	author = User.query.get(post.author)
-	post.author_name = author.name
-	post.body = textile(post.body)
+	post = Post.query.join('author').filter_by(id=id).first_or_404()
 	return render_template('blog/show.html', post=post)
 	
 # atom feed for my blog
