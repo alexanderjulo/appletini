@@ -12,8 +12,6 @@ class User(db.Model):
 	password = db.Column(db.String(32))
 	active = db.Column(db.Boolean)
 	authenticated = db.Column(db.Boolean)
-	
-	author = db.relationship('Post', backref='author')
 
 	def __init__(self, mail, password, name):
 		self.name = name

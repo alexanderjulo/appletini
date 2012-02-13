@@ -75,6 +75,7 @@ class Post(db.Model):
 	created = db.Column(db.DateTime)
 	
 	author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	author = db.relationship('User', backref=db.backref('posts', lazy='dynamic'))
 	
 	def __init__(self, title, body, author):
 		self.title = title
@@ -92,12 +93,12 @@ def postindex():
 	
 @www.route('/blog/<int:page>/')
 def postpage(page):
-	posts = Post.query.join('author').order_by(desc('created')).paginate(page, per_page=6)
+	posts = Post.query.order_by(desc('created')).paginate(page, per_page=6)
 	return render_template('blog/index.html', posts=posts)
 	
 @www.route('/blog/post/<int:id>/')
 def postshow(id):
-	post = Post.query.join('author').filter_by(id=id).first_or_404()
+	post = Post.query.get_or_404(id)
 	return render_template('blog/show.html', post=post)
 	
 # atom feed for my blog
