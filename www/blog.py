@@ -1,5 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash
-from flaskext.login import login_required, current_user
+from flask import render_template, request, url_for
 
 from werkzeug.contrib.atom import AtomFeed
 
@@ -19,7 +18,7 @@ class Post(db.Model):
 	author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	author = db.relationship('User', backref=db.backref('posts', lazy='dynamic'))
 
-	def __init__(self, title, body, author):
+	def __init__(self, title="", body="", author=None):
 		self.title = title
 		self.body_plain = body
 		self.body_textile = textile(body)
@@ -50,41 +49,3 @@ def postatom():
 	for post in Post.query.order_by(desc('created')).limit(10).all():
 		feed.add(post.title, post.body_textile, content_type='html', author=post.author.name, url=url_for('postshow', id=post.id), id=post.id, updated=post.created, published=post.created)
 	return feed.get_response()
-
-@www.route('/admin/post/add/')
-@login_required
-def postadd():
-	return postedit()
-
-@www.route('/admin/post/edit/<int:id>/')
-@login_required
-def postedit(id=None):
-	if id is None:
-		return render_template('blog/edit.html')
-	else:
-		post = Post.query.filter_by(id=id).first_or_404()
-		return render_template('blog/edit.html', body=post.body_plain, title=post.title, id=post.id)
-
-@www.route('/admin/post/post', methods=['POST'])
-@login_required
-def postpost():
-	if request.form['id'] == '':
-		post = Post(title=request.form['title'], body=request.form['body'], author=current_user.get_id())
-		db.session.add(post)
-	else:
-		post = Post.query.filter_by(id=request.form['id']).first_or_404()
-		post.title = request.form['title']
-		post.body_plain = request.form['body']
-		post.body_textile = textile(request.form['body'])
-	db.session.commit()
-	flash('Post saved.')
-	return redirect(url_for('postindex'))
-
-@www.route('/admin/post/delete/<int:id>/')
-@login_required
-def postdel(id):
-	post = Post.query.filter_by(id=id).first_or_404()
-	db.session.delete(post)
-	db.session.commit()
-	flash('Post deleted.')
-	return redirect(url_for('postindex'))

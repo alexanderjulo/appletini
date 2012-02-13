@@ -2,7 +2,7 @@ from flask import Flask
 www = Flask(__name__)
 www.config.from_pyfile('../config.cfg')
 
-from flaskext.login import LoginManager
+from flaskext.login import LoginManager, login_required
 login = LoginManager()
 login.setup_app(www, add_context_processor=True)
 login.login_view = 'login'
@@ -17,3 +17,9 @@ from www import main
 from www import user
 from www import page
 from www import blog
+
+from flask.ext import admin
+from flask.ext.admin.datastore.sqlalchemy import SQLAlchemyDatastore
+admin_datastore = SQLAlchemyDatastore((user.User, page.Page, blog.Post), db.session)
+admin_blueprint = admin.create_admin_blueprint(admin_datastore)
+www.register_blueprint(admin_blueprint, url_prefix='/admin', view_decorator=login_required)

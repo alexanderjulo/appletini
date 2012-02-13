@@ -1,41 +1,12 @@
 from flask import redirect, url_for, render_template, request, flash
-from flaskext.login import login_required
 from flaskext.mail import Message
 
 from www import www, mail
-
-@www.route('/admin/user/')
-@login_required
-def userlist():
-	pass
-
-@www.route('/admin/user/add/')
-@login_required
-def useradd():
-	return useredit()
-
-@www.route('/admin/user/edit/<int:id>/')
-@login_required
-def useredit(id=None):
-	pass
-	
-@www.route('/admin/user/delete/<int:id>/')
-@login_required
-def userdel(id):
-	pass
-	
-@www.route('/admin/user/post', methods=['POST'])
-@login_required
-def userpost():
-	pass
-
 
 # projects page
 @www.route('/projects/')
 def projectindex():
 	return render_template('comingsoon.html', what='Projects')
-
-
 
 # contact app
 @www.route('/contact', methods=['GET', 'POST'])
