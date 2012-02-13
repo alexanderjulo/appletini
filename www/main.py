@@ -11,22 +11,22 @@ from datetime import datetime
 from www import www, db, login, mail
 from user import User
 
-@www.route('/admin/user')
+@www.route('/admin/user/')
 @login_required
 def userlist():
 	pass
 
-@www.route('/admin/user/add')
+@www.route('/admin/user/add/')
 @login_required
 def useradd():
 	return useredit()
 
-@www.route('/admin/user/edit/<int:id>')
+@www.route('/admin/user/edit/<int:id>/')
 @login_required
 def useredit(id=None):
 	pass
 	
-@www.route('/admin/user/delete/<int:id>')
+@www.route('/admin/user/delete/<int:id>/')
 @login_required
 def userdel(id):
 	pass
@@ -38,7 +38,7 @@ def userpost():
 
 
 # projects page
-@www.route('/projects')
+@www.route('/projects/')
 def projectindex():
 	return render_template('comingsoon.html', what='Projects')
 
@@ -84,7 +84,7 @@ class Post(db.Model):
 	def __repr__(self):
 		return '<Post: %r>' % self.title
 		
-@www.route('/blog')
+@www.route('/blog/')
 def postindex():
 	posts = Post.query.order_by(desc('created')).all()
 	for post in posts:
@@ -93,7 +93,7 @@ def postindex():
 		post.body = textile(post.body)
 	return render_template('blog/index.html', posts=posts)
 	
-@www.route('/blog/post/<int:id>')
+@www.route('/blog/post/<int:id>/')
 def postshow(id):
 	post = Post.query.get_or_404(id)
 	author = User.query.get(post.author)
@@ -102,7 +102,7 @@ def postshow(id):
 	return render_template('blog/show.html', post=post)
 	
 # atom feed for my blog
-@www.route('/blog/atom')
+@www.route('/blog/atom/')
 def postatom():
 	feed = AtomFeed('julo.ch', feed_url=request.url, url=request.host_url, subtitle='It\'s mine.')
 	for post in Post.query.order_by(desc('created')).limit(10).all():
@@ -111,12 +111,12 @@ def postatom():
 		feed.add(post.title, textile(post.body), content_type='html', author=post.author_name, url=url_for('postshow', id=post.id), id=post.id, updated=post.created, published=post.created)
 	return feed.get_response()
 	
-@www.route('/admin/post/add')
+@www.route('/admin/post/add/')
 @login_required
 def postadd():
 	return postedit()
 	
-@www.route('/admin/post/edit/<int:id>')
+@www.route('/admin/post/edit/<int:id>/')
 @login_required
 def postedit(id=None):
 	if id is None:
@@ -139,7 +139,7 @@ def postpost():
 	flash('Post saved.')
 	return redirect(url_for('postindex'))
 
-@www.route('/admin/post/delete/<int:id>')
+@www.route('/admin/post/delete/<int:id>/')
 @login_required
 def postdel(id):
 	post = Post.query.filter_by(id=id).first_or_404()

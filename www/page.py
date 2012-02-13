@@ -20,17 +20,17 @@ class Page(db.Model):
 		return '<Page: %r>' % self.path
 
 
-@www.route('/admin/page')
+@www.route('/admin/page/')
 @login_required
 def pageindex():
 	return pageadmin()
 
-@www.route('/admin/page/add')
+@www.route('/admin/page/add/')
 @login_required
 def pageadd():
 	return render_template('pages/edit.html')
 
-@www.route('/admin/page/delete/<int:id>')
+@www.route('/admin/page/delete/<int:id>/')
 @login_required
 def pagedel(id):
 	page = Page.query.filter_by(id=id).first_or_404()
@@ -54,7 +54,7 @@ def pagepost():
 	flash('Page saved.')
 	return redirect(url_for('pageindex'))
 
-@www.route('/admin/page/edit/<int:id>')
+@www.route('/admin/page/edit/<int:id>/')
 @login_required
 def pageadmin(id=None):
 	if id is None:
@@ -64,7 +64,7 @@ def pageadmin(id=None):
 		page = Page.query.filter_by(id=id).first_or_404()
 		return render_template('pages/edit.html', title=page.title, path=page.path, body=page.body, id=page.id)
 
-@www.route('/<path>')
+@www.route('/<path>/')
 def pageshow(path):
 	page = Page.query.filter_by(path=path).first_or_404()
 	return render_template('pages/show.html', content=textile(page.body), title=page.title)

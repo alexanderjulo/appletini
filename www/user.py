@@ -65,7 +65,7 @@ def login():
 	return render_template('login.html')
 
 
-@www.route('/logout')
+@www.route('/logout/')
 @login_required
 def logout():
 	current_user.authenticated = False
