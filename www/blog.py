@@ -20,6 +20,8 @@ class Post(db.Model):
 
 	author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	author = db.relationship('User', backref=db.backref('posts', lazy='dynamic'))
+	
+	tags = db.relationship('Tag', secondary=tags, backref=db.backref('posts', lazy='dynamic'))
 
 	def __init__(self, title, body, author):
 		self.title = title
@@ -30,6 +32,15 @@ class Post(db.Model):
 
 	def __repr__(self):
 		return '<Post: %r>' % self.title
+
+class Tag(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String)
+	
+tags = db.Table('tags',
+	db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
+	db.Column('post_id', db.Integer, db.ForeignKey('post.id'))
+)
 
 @blog.route('/')
 def postindex():
