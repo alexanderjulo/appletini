@@ -1,18 +1,1 @@
-To make this setup work you need to create a config.cfg in the project's root with the following settings:
-SECRET_KEY=<your secret key>
-SQLALCHEMY_DATABASE_URI=<uri to your database>
-
-Of course you can include any other config options in it, like debugging and so on..
-
-There are two custom config options I added, you should make use of:
-WWW_TITLE
-WWW_SLOGAN
-
-use these to set your website's title and slogan.
-
-the contact app has the following setting available:
-WWW_CONTACT_MAIL
-
-set this to the address you want your contact requests send to.
-
-All settings are mandatory.
+See https://github.com/alexex/www/wiki/Installation for more information.
