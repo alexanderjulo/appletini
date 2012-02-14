@@ -1,5 +1,9 @@
 from flask import Blueprint, render_template
 
+from wtforms import Form
+from wtforms.fields import TextField, TextAreaField
+
+from sqlalchemy.ext.hybrid import hybrid_property
 from textile import textile
 
 from www import db
@@ -13,14 +17,22 @@ class Page(db.Model):
 	body_markup = db.Column(db.Text)
 	body_html = db.Column(db.Text)
 
-	def __init__(self, path="", title="", body=""):
-		self.path = path
-		self.title = title
+	@hybrid_property
+	def body(self):
+		return self.body_markup
+
+	@body.setter
+	def body(self, body):
 		self.body_markup = body
 		self.body_html = textile(body)
 
 	def __repr__(self):
 		return '<Page: %r>' % self.path
+
+class PageForm(Form):
+	path = TextField()
+	title = TextField()
+	body = TextAreaField()
 
 @page.route('/<path>/')
 def pageshow(path):
