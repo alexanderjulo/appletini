@@ -9,7 +9,7 @@
 		<div class="post">
 			<h2 class="title"><a href="/blog/post/{{ post.id }}">{{ post.title }}</a></h2>
 			<p class="meta">Posted by {{ post.author.name }} on {{ post.created }}</p>
-			{{ post.body_textile|safe }}
+			{{ post.body_html|safe }}
 			{% if current_user.is_authenticated() %}<p class="meta nav" style="text-align: right;">post: <a href="/admin/post/edit/{{ post.id }}">edit</a> // <a href="/admin/post/delete/{{ post.id}}">delete</a></span>{% endif %}
 		</div>
 	{% endfor %}

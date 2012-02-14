@@ -11,8 +11,8 @@ from www import www, db
 class Post(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String(60))
-	body_plain = db.Column(db.Text)
-	body_textile = db.Column(db.Text)
+	body_markup = db.Column(db.Text)
+	body_html = db.Column(db.Text)
 	created = db.Column(db.DateTime)
 
 	author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -47,5 +47,5 @@ def postshow(id):
 def postatom():
 	feed = AtomFeed('julo.ch', feed_url=request.url, url=request.host_url, subtitle='It\'s mine.')
 	for post in Post.query.order_by(desc('created')).limit(10).all():
-		feed.add(post.title, post.body_textile, content_type='html', author=post.author.name, url=url_for('postshow', id=post.id), id=post.id, updated=post.created, published=post.created)
+		feed.add(post.title, post.body_html, content_type='html', author=post.author.name, url=url_for('postshow', id=post.id), id=post.id, updated=post.created, published=post.created)
 	return feed.get_response()
