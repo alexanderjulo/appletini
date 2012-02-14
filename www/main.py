@@ -1,19 +1,13 @@
-from flask import redirect, url_for, render_template, request, flash
-from flaskext.mail import Message
+from flask import redirect, url_for, render_template
 
-from www import www, mail
-
-# projects page
-@www.route('/projects/')
-def projectindex():
-	return render_template('comingsoon.html', what='Projects')
+from www import www
 
 # stuff independent of the sections
 
 # home page
 @www.route('/')
 def home():
-	return redirect(url_for('postindex'))
+	return redirect(url_for('blog.postindex'))
 
 # 404 page
 @www.errorhandler(404)

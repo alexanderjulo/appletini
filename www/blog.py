@@ -1,4 +1,4 @@
-from flask import render_template, request, url_for
+from flask import Blueprint, render_template, request, url_for
 
 from werkzeug.contrib.atom import AtomFeed
 
@@ -12,8 +12,10 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from textile import textile
 from datetime import datetime
 
-from www import www, db
+from www import db
 from user import User
+
+blog = Blueprint('blog', __name__)
 
 class Post(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -46,22 +48,22 @@ class PostForm(Form):
 	author = QuerySelectField(query_factory=all_users)
 	body = TextAreaField()
 
-@www.route('/blog/')
+@blog.route('/')
 def postindex():
 	return postpage(1)
 
-@www.route('/blog/<int:page>/')
+@blog.route('/<int:page>/')
 def postpage(page):
 	posts = Post.query.order_by(desc('created')).paginate(page, per_page=6)
 	return render_template('blog/index.html', posts=posts)
 
-@www.route('/blog/post/<int:id>/')
+@blog.route('/post/<int:id>/')
 def postshow(id):
 	post = Post.query.get_or_404(id)
 	return render_template('blog/show.html', post=post)
 
 # atom feed for my blog
-@www.route('/blog/atom/')
+@blog.route('/atom/')
 def postatom():
 	feed = AtomFeed('julo.ch', feed_url=request.url, url=request.host_url, subtitle='It\'s mine.')
 	for post in Post.query.order_by(desc('created')).limit(10).all():

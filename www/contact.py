@@ -1,11 +1,12 @@
-from flask import request, flash, redirect, url_for, render_template
+from flask import Blueprint, request, flash, redirect, url_for, render_template
 from flaskext.mail import Message
 
 from www import www, mail
 
+contact = Blueprint('contact', __name__)
 
-@www.route('/contact', methods=['GET', 'POST'])
-def contact():
+@contact.route('/', methods=['GET', 'POST'])
+def main():
 	if request.method == 'POST':
 		if request.form['name'] == '':
 			flash('Please enter a valid name.')

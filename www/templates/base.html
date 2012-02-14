@@ -4,7 +4,7 @@
 		<title>{% block title %}Site{% endblock %} - {{ title }}</title>
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='base.css') }}">
 		<link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono|Droid+Serif' rel='stylesheet' type='text/css'>
-		<link rel="alternate" type="application/atom+xml" title="Blog - {{ title }}" href="{{ url_for('postatom') }}" />
+		<link rel="alternate" type="application/atom+xml" title="Blog - {{ title }}" href="{{ url_for('blog.postatom') }}" />
 		{% block css %}
 		{% endblock %}
 		{% block js %}
@@ -17,7 +17,7 @@
 				<h1>{{ title }}</h1>
 				<p>{{ slogan }}</p>
 			</div>
-			<p class="nav"><a href="/blog">blog</a> // <a href="/projects">projects</a> // <a href="/about">about</a> // <a href="/contact">contact</a></p>
+			<p class="nav"><a href="/blog">blog</a> // <a href="/about">about</a> // <a href="/contact">contact</a></p>
 			{% if current_user.is_authenticated() %}<p class="adminnav">admin: <a href="/admin/page">pages</a> // <a href="/admin/user">user</a>{% endif %}</p>
 			<div id="content">
 				{% with messages = get_flashed_messages() %}

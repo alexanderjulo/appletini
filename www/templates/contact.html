@@ -3,7 +3,7 @@
 {% block css %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='form.css') }}">{% endblock %}
 {% block content %}
 <div class="form">
-	<form method="POST" action="/contact">
+	<form method="POST" action="{{ url_for('contact.main') }}">
 		<label for "email">your name:</label><br />
 		<input type="text" id="name" name="name" size="40"><br />
 		<label for "email">your mail:</label><br />
