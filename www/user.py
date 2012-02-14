@@ -13,7 +13,7 @@ class User(db.Model):
 	active = db.Column(db.Boolean)
 	authenticated = db.Column(db.Boolean)
 
-	def __init__(self, mail, password, name):
+	def __init__(self, mail="", password="", name=""):
 		self.name = name
 		self.mail = mail
 		self.password = md5(password).hexdigest()

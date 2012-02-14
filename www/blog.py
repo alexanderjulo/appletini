@@ -2,11 +2,18 @@ from flask import render_template, request, url_for
 
 from werkzeug.contrib.atom import AtomFeed
 
+from wtforms import Form
+from wtforms.fields import TextField, TextAreaField, DateTimeField
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from flask.ext.admin.wtforms import DateTimePickerWidget
+
 from sqlalchemy import desc
+from sqlalchemy.ext.hybrid import hybrid_property
 from textile import textile
 from datetime import datetime
 
 from www import www, db
+from user import User
 
 class Post(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -18,15 +25,26 @@ class Post(db.Model):
 	author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 	author = db.relationship('User', backref=db.backref('posts', lazy='dynamic'))
 
-	def __init__(self, title="", body="", author=None):
-		self.title = title
-		self.body_plain = body
-		self.body_textile = textile(body)
-		self.created = datetime.utcnow()
-		self.author_id = author
+	@hybrid_property
+	def body(self):
+		return self.body_markup
+
+	@body.setter
+	def body(self, body):
+		self.body_markup = body
+		self.body_html = textile(body)
 
 	def __repr__(self):
 		return '<Post: %r>' % self.title
+
+def all_users():
+	return User.query.all()
+
+class PostForm(Form):
+	title = TextField()
+	created = DateTimeField(widget=DateTimePickerWidget())
+	author = QuerySelectField(query_factory=all_users)
+	body = TextAreaField()
 
 @www.route('/blog/')
 def postindex():

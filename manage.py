@@ -1,4 +1,5 @@
 from www import www, db
+from www.user import User
 
 from flaskext.script import Manager
 manager = Manager(www)

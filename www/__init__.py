@@ -22,6 +22,6 @@ from www import contact
 
 from flask.ext import admin
 from flask.ext.admin.datastore.sqlalchemy import SQLAlchemyDatastore
-admin_datastore = SQLAlchemyDatastore((user.User, page.Page, blog.Post), db.session)
+admin_datastore = SQLAlchemyDatastore((user.User, page.Page, blog.Post), db.session, model_forms={'Post': blog.PostForm})
 admin_blueprint = admin.create_admin_blueprint(admin_datastore)
 www.register_blueprint(admin_blueprint, url_prefix='/admin', view_decorator=login_required)
