@@ -6,6 +6,9 @@ manager = Manager(www)
 @manager.command
 def initdb():
 	db.create_all()
+	u = User("mail@danjou.de", "1234", "dAnjou")
+	db.session.add(u)
+	db.session.commit()
 	
 @manager.command
 def dropdb():
