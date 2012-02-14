@@ -11,6 +11,11 @@ from www import db
 
 blog = Blueprint('blog', __name__)
 
+tags = db.Table('tags',
+	db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
+	db.Column('post_id', db.Integer, db.ForeignKey('post.id'))
+)
+
 class Post(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String(60))
@@ -36,11 +41,6 @@ class Post(db.Model):
 class Tag(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String)
-	
-tags = db.Table('tags',
-	db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
-	db.Column('post_id', db.Integer, db.ForeignKey('post.id'))
-)
 
 @blog.route('/')
 def postindex():
