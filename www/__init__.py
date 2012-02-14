@@ -13,10 +13,12 @@ db = SQLAlchemy(www)
 from flaskext.mail import Mail
 mail = Mail(www)
 
+from www import tweaks
 from www import main
 from www import user
 from www import page
 from www import blog
+from www import contact
 
 from flask.ext import admin
 from flask.ext.admin.datastore.sqlalchemy import SQLAlchemyDatastore
