@@ -3,7 +3,7 @@
 {% block css %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='form.css') }}">{% endblock %}
 {% block content %}
 <div class="form">
-	<form method="POST" action="/login">
+	<form method="POST" action="{{ url_for('login', next=next) }}">
 		<label for "email">mail:</label><br />
 		<input type="text" id="email" name="email" size="40"><br />
 		<label for "password">pass:</label><br />

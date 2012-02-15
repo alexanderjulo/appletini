@@ -62,7 +62,7 @@ def login():
 			return redirect(request.args.get("next") or url_for('home'))
 		else:
 			flash('Login failed.')
-	return render_template('login.html')
+	return render_template('login.html', next=request.args.get("next"))
 
 
 @www.route('/logout/')
