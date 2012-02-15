@@ -3,12 +3,12 @@
 {% block css %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='blog.css') }}">{% endblock %}
 
 {% block content %}
-{% if current_user.is_authenticated() %}<p class="adminnav">blog: <a href="{{ url_for('blog.postadd') }}">add post</a></p>{% endif %}
+{% if current_user.is_authenticated() %}<p class="adminnav">blog: <a href="{{ url_for('admin.add', model_name='Post') }}">add post</a></p>{% endif %}
 <div class="post">
 	<h2 class="title">{{ post.title }}</h2>
 	<p class="meta">Posted by {{ post.author.name }} on {{ post.created }}</p>
 	{{ post.body_html|safe }}
 	<p class="nav"><a href="/blog">Back</a></p>
-	{% if current_user.is_authenticated() %}<p class="meta nav" style="text-align: right;">post: <a href="{{ url_for('blog.postedit', id=post.id) }}">edit</a> // <a href="{{ url_for('blog.postdel', id=post.id) }}">delete</a></span>{% endif %}
+	{% if current_user.is_authenticated() %}<p class="meta nav" style="text-align: right;">post: <a href="{{ url_for('admin.edit', model_name='Post', model_url_key=post.id) }}">edit</a> // <a href="{{ url_for('admin.delete', model_name='Post', model_url_key=post.id) }}">delete</a></span>{% endif %}
 </div>
 {% endblock %}

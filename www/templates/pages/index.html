@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block title %}Pages{% endblock %}
 {% block content %}
-<p class="adminnav">pages: <a href="/admin/page/add">add page</a></p>
+<p class="adminnav">pages: <a href="{{ url_for('admin.add', model_name='Page') }}">add page</a></p>
 {% if pages %}
 	<ul>
 	{% for page in pages %}
 		<li>{{ page.title }}<br />
 		Located at <a href="/{{ page.path }}">/{{ page.path }}</a><br />
-		<a href="/admin/page/edit/{{ page.id }}">Edit</a> // <a href="/admin/page/delete/{{ page.id }}">Delete</a>
+		<a href="{{ url_for('admin.edit', model_name='Page', model_url_key=page.id) }}">Edit</a> // <a href="{{ url_for('admin.delete', model_name='Page', model_url_key=page.id) }}">Delete</a>
 		</li>
 	{% endfor %}
 	</ul>
