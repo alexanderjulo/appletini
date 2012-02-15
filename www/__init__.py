@@ -16,9 +16,14 @@ mail = Mail(www)
 from www import tweaks
 from www import main
 from www import user
-from www.page import page
-www.register_blueprint(page)
-from www.blog import blog
-www.register_blueprint(blog, url_prefix='/blog')
-from www.contact import contact
-www.register_blueprint(contact, url_prefix='/contact')
+from werkzeug.utils import import_string
+
+'''
+example config line:
+WWW_BLUEPRINTS=[('www.blog.blog',{'url_prefix': '/blog'}),\
+				('www.contact.contact',{'url_prefix': '/contact'})]
+'''
+
+for blueprint, options in www.config['WWW_BLUEPRINTS']:
+    blueprint_obj = import_string(blueprint)
+    www.register_blueprint(blueprint_obj, **options)
