@@ -10,9 +10,8 @@ from flask.ext.admin.wtforms import DateTimePickerWidget
 from sqlalchemy import desc
 from sqlalchemy.ext.hybrid import hybrid_property
 from textile import textile
-from datetime import datetime
 
-from www import db
+from www import www, db
 from user import User
 
 blog = Blueprint('blog', __name__)
