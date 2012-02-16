@@ -1,4 +1,5 @@
 from www import www, db
+from www.user import User
 
 from www.user import User
 
@@ -29,3 +30,4 @@ def dropdb():
 
 if __name__ == '__main__':
 	manager.run()
+

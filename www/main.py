@@ -1,5 +1,4 @@
 from flask import redirect, url_for, render_template
-from flaskext.login import login_required
 
 from www import www
 
