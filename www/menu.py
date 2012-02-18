@@ -2,8 +2,8 @@ from www import www, db
 
 class Menu(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	name = db.Column(db.String())
-	link = db.Column(db.String(), unique=True)
+	name = db.Column(db.String(60))
+	link = db.Column(db.String(60), unique=True)
 	
 	def __init__(self, name, link):
 		self.name = name
