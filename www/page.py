@@ -34,7 +34,7 @@ class PageForm(Form):
 	title = TextField()
 	body = TextAreaField()
 
-@page.route('/<path>/')
+@page.route('/<path:path>/')
 def pageshow(path):
 	page = Page.query.filter_by(path=path).first_or_404()
 	return render_template('pages/show.html', page=page)
