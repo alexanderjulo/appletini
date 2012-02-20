@@ -20,6 +20,8 @@ class Page(db.Model):
 	@hybrid_property
 	def body(self):
 		return self.body_markup
+	
+	menu = db.Column(db.String(80))
 
 	@body.setter
 	def body(self, body):
