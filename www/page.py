@@ -8,7 +8,7 @@ from textile import textile
 
 from www import db
 
-page = Blueprint('page', __name__)
+blueprint = Blueprint('page', __name__)
 
 class Page(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -34,7 +34,11 @@ class PageForm(Form):
 	title = TextField()
 	body = TextAreaField()
 
-@page.route('/<path:path>/')
+@blueprint.route('/<path:path>/')
 def pageshow(path):
 	page = Page.query.filter_by(path=path).first_or_404()
 	return render_template('pages/show.html', page=page)
+
+admin_models = [Page]
+admin_forms = {'Page': PageForm}
+

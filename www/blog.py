@@ -14,7 +14,7 @@ from textile import textile
 from www import www, db
 from user import User
 
-blog = Blueprint('blog', __name__)
+blueprint = Blueprint('blog', __name__)
 
 class Post(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
@@ -47,24 +47,28 @@ class PostForm(Form):
 	author = QuerySelectField(query_factory=all_users)
 	body = TextAreaField()
 
-@blog.route('/')
+@blueprint.route('/')
 def postindex():
 	return postpage(1)
 
-@blog.route('/<int:page>/')
+@blueprint.route('/<int:page>/')
 def postpage(page):
 	posts = Post.query.order_by(desc('created')).paginate(page, per_page=6)
 	return render_template('blog/index.html', posts=posts)
 
-@blog.route('/post/<int:id>/')
+@blueprint.route('/post/<int:id>/')
 def postshow(id):
 	post = Post.query.get_or_404(id)
 	return render_template('blog/show.html', post=post)
 
 # atom feed for my blog
-@blog.route('/atom/')
+@blueprint.route('/atom/')
 def postatom():
 	feed = AtomFeed(www.config['WWW_TITLE'], feed_url=request.url, url=request.host_url, subtitle=www.config['WWW_SLOGAN'])
 	for post in Post.query.order_by(desc('created')).limit(10).all():
-		feed.add(post.title, post.body_html, content_type='html', author=post.author.name, url=url_for('blog.postshow', id=post.id), id=post.id, updated=post.created, published=post.created)
+		feed.add(post.title, post.body_html, content_type='html', author=post.author.name, url=url_for('blueprint.postshow', id=post.id), id=post.id, updated=post.created, published=post.created)
 	return feed.get_response()
+
+admin_models = [Post]
+admin_forms = {'Post': PostForm}
+
