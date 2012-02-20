@@ -3,9 +3,11 @@ from flaskext.mail import Message
 
 from www import www, mail
 
-contact = Blueprint('contact', __name__)
+blueprint = Blueprint('contact', __name__)
+admin_models = []
+admin_forms = {}
 
-@contact.route('/', methods=['GET', 'POST'])
+@blueprint.route('/', methods=['GET', 'POST'])
 def main():
 	if request.method == 'POST':
 		if request.form['name'] == '':
@@ -24,3 +26,4 @@ def main():
 			flash('Message sent.')
 			return redirect(url_for('home'))
 	return render_template('contact.html')
+

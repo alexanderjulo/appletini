@@ -16,16 +16,26 @@ mail = Mail(www)
 from www import tweaks
 from www import main
 from www import user
-from www.page import page, Page, PageForm
-www.register_blueprint(page)
-from www.blog import blog, Post, PostForm
-www.register_blueprint(blog, url_prefix='/blog')
-from www.contact import contact
-www.register_blueprint(contact, url_prefix='/contact')
-
+from werkzeug.utils import import_string
 from flask.ext import admin
 from flask.ext.admin.datastore.sqlalchemy import SQLAlchemyDatastore
-admin_datastore = SQLAlchemyDatastore((Page, Post), db.session, model_forms={'Post': PostForm, 'Page': PageForm})
+
+'''
+example config line:
+WWW_BLUEPRINTS=[('www.blog',{'url_prefix': '/blog'}),\
+				('www.contact',{'url_prefix': '/contact'})]
+'''
+
+admin_forms = {}
+admin_models = []
+
+for module, options in www.config['WWW_BLUEPRINTS']:
+	m = import_string(module)
+	www.register_blueprint(m.blueprint, **options)
+	admin_models.extend(m.admin_models)
+	admin_forms.update(m.admin_forms)
+
+admin_datastore = SQLAlchemyDatastore(tuple(admin_models), db.session, model_forms=admin_forms)
 admin_blueprint = admin.create_admin_blueprint(admin_datastore)
 
 def check_auth_for_admin():
@@ -34,3 +44,4 @@ def check_auth_for_admin():
 
 admin_blueprint.before_request(check_auth_for_admin)
 www.register_blueprint(admin_blueprint, url_prefix='/admin')
+
