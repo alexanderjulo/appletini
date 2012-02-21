@@ -1,22 +1,20 @@
 from flask import request, redirect, render_template, flash, url_for
 from flaskext.login import login_user, logout_user, login_required, current_user
 
-from hashlib import md5
-
-from www import www, db, login
+from www import www, db, login, bcrypt
 
 class User(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(60), unique=True)
 	mail = db.Column(db.String(60), unique=True)
-	password = db.Column(db.String(32))
+	password = db.Column(db.String(62))
 	active = db.Column(db.Boolean)
 	authenticated = db.Column(db.Boolean)
 
 	def __init__(self, mail="", password="", name=""):
 		self.name = name
 		self.mail = mail
-		self.password = md5(password).hexdigest()
+		self.password = bcrypt.generate_password_hash(password)
 		self.active = True
 		self.authenticated = False
 
@@ -24,7 +22,7 @@ class User(db.Model):
 		return '<User: %s>' % self.name
 
 	def authenticate(self, password):
-		if self.password == md5(password).hexdigest():
+		if bcrypt.check_password_hash(self.password, password):
 			return True
 		else:
 			return False
