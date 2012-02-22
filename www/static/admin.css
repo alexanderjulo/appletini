@@ -1,0 +1,26 @@
+form.edit_form fieldset {
+	text-align: center;
+}
+
+form.edit_form ul {
+	list-style-type: none;
+	padding-left: 0px;
+}
+
+form.edit_form label {
+	width: 180px;
+	display: inline-block;
+	text-align: left;
+}
+
+form.edit_form input {
+	min-width: 250px;
+}
+
+form.edit_form textarea {
+	display: block;
+	width: 435px;
+	height: 300px;
+	margin-left: auto;
+	margin-right: auto;
+}
