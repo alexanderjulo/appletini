@@ -18,9 +18,15 @@
 				<p>{{ slogan }}</p>
 			</div>
 			<p class="nav">
-				{% for name, link in menu %}
-					<a href="{{ url_for('page.pageshow', path=link) }}">{{ name|safe }}</a> //
-				{% endfor %}
+				{% with i = 0 %}
+					{% for name, link in menu %}
+						{% if i > 0 %}
+							//
+						{% endif %}
+						<a href="{{ url_for('page.pageshow', path=link) }}">{{ name|safe }}</a>
+						{% set i = i + 1 %}
+					{% endfor %}
+				{% endwith %}
 			{% if current_user.is_authenticated() %}<p class="adminnav">admin: <a href="{{ url_for('admin.list', model_name='Page') }}">pages</a> // <a href="/admin/user">user</a>{% endif %}</p>
 			<div id="content">
 				{% with messages = get_flashed_messages() %}
