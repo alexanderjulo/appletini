@@ -1,7 +1,7 @@
 #!/usr/bin/env python2.7
 import sys, os
 
-sys.path.insert(0, '/home/alexex/projects/appletini')
+sys.path.insert(0, '/home/alexex/hosts/www.julo.ch')
 
 from flup.server.fcgi import WSGIServer
 from www import www
